@@ -57,3 +57,37 @@ class Leads(models.Model):
         except Exception as e:
             logger.error(
                 'Error sending SNS message: ' + (e.fmt if hasattr(e, 'fmt') else '') + ','.join(e.args))
+
+
+
+
+    def get_leads(self, domain, preview):
+        try:
+            dynamodb = boto3.resource('dynamodb', region_name=AWS_REGION)
+            table = dynamodb.Table('gsg-signup-table')
+        except Exception as e:
+            logger.error(
+                'Error connecting to database table: ' + (e.fmt if hasattr(e, 'fmt') else '') + ','.join(e.args))
+            return None
+        expression_attribute_values = {}
+        FilterExpression = []
+        if preview:
+            expression_attribute_values[':p'] = preview
+            FilterExpression.append('preview = :p')
+        if domain:
+            expression_attribute_values[':d'] = '@' + domain
+            FilterExpression.append('contains(email, :d)')
+        if expression_attribute_values and FilterExpression:
+            response = table.scan(
+                FilterExpression=' and '.join(FilterExpression),
+                ExpressionAttributeValues=expression_attribute_values,
+            )
+        else:
+            response = table.scan(
+                ReturnConsumedCapacity='TOTAL',
+            )
+        if response['ResponseMetadata']['HTTPStatusCode'] == 200:
+            return response['Items']
+        logger.error('Unknown error retrieving items from database.')
+        return None
+

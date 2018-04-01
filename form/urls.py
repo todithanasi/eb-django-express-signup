@@ -9,4 +9,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     # ex: /signup
     path('signup', views.signup, name='signup'),
+    # ex: /search
+    path('search', views.search, name='search'),
 ]
