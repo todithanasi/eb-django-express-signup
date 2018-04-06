@@ -84,6 +84,7 @@ class Leads(models.Model):
             )
         else:
             response = table.scan(
+                AttributesToGet=['email'],
                 ReturnConsumedCapacity='TOTAL',
             )
         if response['ResponseMetadata']['HTTPStatusCode'] == 200:
