@@ -5,3 +5,5 @@
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 *.pyc
+/eb-django-express-signup/__pycache__
+/form/__pycache__
