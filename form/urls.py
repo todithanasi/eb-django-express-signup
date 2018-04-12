@@ -13,4 +13,6 @@ urlpatterns = [
     path('search', views.search, name='search'),
     # ex: /chart
     path('chart', views.chart, name='chart'),
+    # ex: /map
+    path('map', views.map, name='map'),
 ]
