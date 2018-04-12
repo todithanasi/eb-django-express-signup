@@ -14,13 +14,17 @@
 <script type="text/javascript">
     // parse a spec and create a visualization view
     function parse(spec) {
-      alert(spec);
         vg.parse.spec(spec, function (chart) {
 
             chart({el: "#vis"}).update();
         });
     }
-    <!--parse('{% static 'domain_freq.json' %}');-->
-    parse({{ items_to_show }});
+
+    <!-- This code is added to prevent the autoescape and provide the JSON in the correct format in order to be parsed by the chart function. -->
+
+     {% autoescape off %}
+		    parse(JSON.parse({{ items_to_show }}));
+	 {% endautoescape %}
+
 </script>
 </html>
