@@ -17,9 +17,7 @@ from django.core import serializers
 from django.http import JsonResponse
 
 BASE_DIR = getattr(settings, "BASE_DIR", None)
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_KEY')
-
+S3_BUCKET_URL = getattr(settings, "S3_BUCKET_URL", None)
 
 
 def home(request):
@@ -68,12 +66,16 @@ def chart(request):
 def map(request):
     from_date = request.GET.get('from')
     to_date = request.GET.get('to')
-    filename = from_date + '-' + to_date + '.json'
+    if (from_date is None and to_date is None):
+        filename = "allData.json"
+    else:
+        filename = from_date + '-' + to_date + '.json'
+
     geo_data = {
         "type": "FeatureCollection",
         "features": []
     }
-    bucket_name = 'gsg-maps-dump'
+    bucket_name = getattr(settings, "BUCKET_NAME", None)
     # connect to s3
     conn = boto3.resource('s3')
 
@@ -98,4 +100,4 @@ def map(request):
             }
             geo_data['features'].append(geo_json_feature)
         conn.Object(bucket_name, filename).put(Body=json.dumps(geo_data, indent=4))
-    return render(request, 'map.html', {'filename': filename})
+    return render(request, 'map.html', {'filename': filename, 'S3_BUCKET_URL': S3_BUCKET_URL})

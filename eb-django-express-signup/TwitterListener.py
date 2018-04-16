@@ -34,7 +34,6 @@ class MyListener(StreamListener):
                     'c0': str(tweet['coordinates']['coordinates'][0]),
                     'c1': str(tweet['coordinates']['coordinates'][1]),
                     'text': tweet['text'],
-                    #"created_at": tweet['created_at'],
                     "created_at": str(parser.parse(tweet["created_at"]).timestamp()),
                 }
             )

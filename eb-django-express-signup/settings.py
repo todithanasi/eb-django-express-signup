@@ -26,6 +26,14 @@ SECRET_KEY = ')ax^t(vhomtt9166)y5bss9pz&5s7&$v^+16f^90hw(&@m5wyb'
 
 DEBUG = os.environ['DEBUG']
 
+# S3 url in order to access the files.
+
+S3_BUCKET_URL = "https://s3.eu-west-1.amazonaws.com/cc-maps/"
+
+# Bucket name which will be used to store the json files.
+
+BUCKET_NAME = "cc-maps"
+
 ALLOWED_HOSTS = ['.elasticbeanstalk.com','localhost','127.0.0.1']
 
 
