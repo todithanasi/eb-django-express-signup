@@ -26,7 +26,6 @@
     // Initialise an empty map
     var map = L.map('map');
 
-alert("{{S3_BUCKET_URL}}");
     // Read the GeoJSON data with jQuery, and create a circleMarker element for each tweet
     $.getJSON("{{S3_BUCKET_URL}}{{ filename }}", function (data) {
         var myStyle = {
