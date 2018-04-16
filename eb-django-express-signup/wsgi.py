@@ -10,6 +10,15 @@ https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
+# import threading
+# import TwitterListener
+
+
+
+
+# t = threading.Thread(target=TwitterListener.MyListener().run(), name='TwitterThread')
+# t.daemon = True
+# t.start()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "eb-django-express-signup.settings")
 

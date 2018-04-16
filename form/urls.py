@@ -15,4 +15,6 @@ urlpatterns = [
     path('chart', views.chart, name='chart'),
     # ex: /map
     path('map', views.map, name='map'),
+    # ex: /Twitter
+    path('twitter', views.twitter, name='twitter'),
 ]

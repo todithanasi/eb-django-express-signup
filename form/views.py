@@ -12,9 +12,7 @@ import vincent
 from django.conf import settings
 
 import json
-from django.http import JsonResponse
-from django.core import serializers
-from django.http import JsonResponse
+import subprocess
 
 BASE_DIR = getattr(settings, "BASE_DIR", None)
 S3_BUCKET_URL = getattr(settings, "S3_BUCKET_URL", None)
@@ -101,3 +99,17 @@ def map(request):
             geo_data['features'].append(geo_json_feature)
         conn.Object(bucket_name, filename).put(Body=json.dumps(geo_data, indent=4))
     return render(request, 'map.html', {'filename': filename, 'S3_BUCKET_URL': S3_BUCKET_URL})
+
+
+def twitter(request):
+    stop = request.GET.get('stop')
+    if stop:
+
+        return render(request, 'index.html')
+    else:
+        p = subprocess.Popen([sys.executable, BASE_DIR+'\TwitterListener.py'],
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.STDOUT)
+
+        return render(request, 'twitter.html')
+
