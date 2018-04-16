@@ -24,7 +24,7 @@ SECRET_KEY = ')ax^t(vhomtt9166)y5bss9pz&5s7&$v^+16f^90hw(&@m5wyb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = 'True'
+DEBUG = os.environ['DEBUG']
 
 # S3 url in order to access the files.
 
